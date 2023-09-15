@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { AppContext } from "../Context/AppContext";
 
 const Footer = () => {
   return (
