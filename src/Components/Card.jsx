@@ -1,20 +1,36 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Link } from 'react-router-dom'
+import style from '../Styles/card.module.css'
+import style2 from '../Styles/app.module.css'
 
 
-const Card = ({ name, username, id }) => {
+const Card = (dentist) => {
+  const [isFav, setIsFav] = useState(false);
+  useEffect(() => {
+    const localData = localStorage.getItem("favs") || "[]";
+    const localDataArray = JSON.parse(localData);
+    const existDentist = localDataArray.some((d) => d.id === dentist.id);
+    if (existDentist) {
+      setIsFav(true);
+    }
+  }, [dentist.id]);
 
-  const addFav = ()=>{
-    // Aqui iria la logica para agregar la Card en el localStorage
-  }
-
+  const addFav = () => {
+    const localData = localStorage.getItem("favs") || "[]";
+    let localDataArray = JSON.parse(localData);
+    const existDentist = localDataArray.some((d) => d.id === dentist.id);
+    if (!existDentist) {
+      localDataArray.push(dentist);
+      setIsFav(true);
+      localStorage.setItem("favs", JSON.stringify(localDataArray));
+    }
+  };
   return (
-    <div className="card">
-        {/* En cada card deberan mostrar en name - username y el id */}
-
-        {/* No debes olvidar que la Card a su vez servira como Link hacia la pagina de detalle */}
-
-        {/* Ademas deberan integrar la logica para guardar cada Card en el localStorage */}
-        <button onClick={addFav} className="favButton">Add fav</button>
+    <div className={style.card} key={dentist.id}>
+        <img src="/images/doctor.jpg" alt="img doctor" />
+        <Link className={style.name} to={`/dentist/${dentist.id}`}>{dentist.name}</Link>
+        <h3 className={style.userName}>{dentist.username}</h3>
+        {!dentist.isDisable?<button onClick={addFav} className={style2.fav} disabled={isFav}>{isFav? "Added to favs" : "Add Fav"}</button>: undefined}
     </div>
   );
 };
