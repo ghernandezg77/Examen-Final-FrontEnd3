@@ -32,7 +32,7 @@ const Form = () => {
 
 
 return (
-  <div>
+  <div className={styles.div}>
     <form onSubmit={handleSubmit}>
       <label>Name:</label>
       <input type="text" placeholder="Enter your name" onChange={handleOnChangeName} value={inputName}/>
