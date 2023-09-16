@@ -3,6 +3,7 @@
     bottom: 0;
     width: 100%;
     background-color: rgb(115, 166, 179);
+    box-shadow: 0 1px 16px rgb(115, 166, 179);
   }
   .icon {
     width: auto;
